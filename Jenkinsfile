@@ -61,6 +61,13 @@ spec:
         stage('SonarQube Analysis') {
             steps {
                 container('sonar-scanner') {
+                    sh '''
+                        mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=hello-java \
+                        -Dsonar.projectName='hello-java' \
+                        -Dsonar.host.url=http://my-sonarqube-sonarqube.sonarqube.svc.cluster.local:9000 \
+                        -Dsonar.token=sqp_3acfb8be197be4c3f9b6f0d2660194014be8d78c
+                    '''
                 }
             }
         }
