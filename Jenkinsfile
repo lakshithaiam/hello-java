@@ -6,6 +6,11 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: maven
+    image: maven:3.9.6-eclipse-temurin-17
+    command:
+    - cat
+    tty: true
   - name: sonar-scanner
     image: sonarsource/sonar-scanner-cli
     command:
@@ -60,7 +65,7 @@ spec:
         }
         stage('SonarQube Analysis') {
             steps {
-                container('sonar-scanner') {
+                container('maven') {
                     sh '''
                         mvn clean verify sonar:sonar \
                         -Dsonar.projectKey=hello-java \
